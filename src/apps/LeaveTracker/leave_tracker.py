@@ -1,4 +1,5 @@
 import requests
+from ...core.manager import Manager
 
 class LeaveTracker():
     def __init__(self, *args, **kwargs):
@@ -6,11 +7,14 @@ class LeaveTracker():
         self.name = "Leave Tracker App"
         self.version = "0.0.1"
         self.description = "For tracking leaves"
+        self.manager = Manager()
     
     async def get_leaves(self):
+        print(f"Using {self.name} - V.{self.version}")
         message = "Here you go, Leaves Data: \n\n"
-        leaves_webhook_url = "https://script.google.com/macros/s/AKfycbxE9HRpPr1eRJJQgcT5VfEsdJGFXMsdEGOXe1VOdNoHBFOV4Y_JYSYjSKcMQ7yMvbDq/exec"
-        response = requests.get(leaves_webhook_url)
+        url = self.manager.APP_SCRIPT_URL
+        print(f"Fetching data from {url}")
+        response = requests.get(url)
 
         if response.status_code == 200:
             response_data = response.json()  

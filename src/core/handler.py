@@ -21,21 +21,20 @@ class BotHandler(Manager):
             paLM_reply = await self.paLM2.req(text, user_id)
             paLM_reply = paLM_reply.replace('OptiBot:', '')
             
-            match paLM_reply.split(',')[0]:
-                case "leaves":
+            option = paLM_reply.split(',')[0]
+            if option == "leaves":
                     self.SLACK_CLIENT.chat_postMessage( channel=channel_id, text="Please wait, I am fetching the details :hourglass_flowing_sand:")
-                    table, status = await self.leave_tracker.get_leaves()
+                    table, status = await self.leaves_tracker.get_leaves()
                     if status == 200:
                         self.SLACK_CLIENT.chat_postMessage( channel=channel_id, text=table)
                     else:
                         self.SLACK_CLIENT.chat_postMessage( channel=channel_id, text="Sorry, I am unable to fetch the details :disappointed:")
-                case "add leave":
-                    self.SLACK_CLIENT.chat_postMessage( channel=channel_id, text="Add Leave function called")
-                case _:
+            elif option == "add leave":
+                self.SLACK_CLIENT.chat_postMessage( channel=channel_id, text="Add Leave function called")
+            else:
                     paLM_reply = await self.markdown_to_slack(paLM_reply)
                     await self.SLACK_CLIENT.chat_postMessage(channel=channel_id, text=paLM_reply)
 
-            self.SLACK_CLIENT.chat_postMessage(channel=channel_id, text=paLM_reply)
         elif model == "Llama2":
             print("Llama2 is not ready yet.")
         else:
