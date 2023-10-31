@@ -23,14 +23,17 @@
 
 ```mermaid
 graph LR
-A[User] --> B((Slack Bot)) ---> A
-B --> C[Leave Tracker]
+A[User] ---> B((Slack Bot)) ---> A
+B <--> C[Leave Tracker]
 C --> D[Apply Leave]
-C --> E[Leave History]
+C <--> E[Leave History]
 C --> F[Leave Balance]
 
 G[Notion Issue Tracker] --> B
 H[Testing Issues] --> G
 I[Client Issues] --> G
+
+J[Google's paLM2] <--> B
+
 ```
 
