@@ -10,6 +10,7 @@ class Manager:
         self._handlers = []
         self.SIGNING_SECRET = getenv('SIGNING_SECRET')
         self.SLACK_CLIENT = slack.WebClient(token=getenv('SLACK_TOKEN'))
+        self.APP_SCRIPT_URL = getenv('APP_SCRIPT_URL')
         self.NLP_EN = spacy.load("en_core_web_sm")
         self.training_chunk = list()
         self.raw_training_data = {
