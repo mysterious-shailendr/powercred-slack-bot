@@ -5,3 +5,4 @@ PyYAML
 uvicorn
 slackeventsapi
 spacy
+slack
